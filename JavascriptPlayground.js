@@ -13,7 +13,10 @@ const numbers = (count, multiple) =>
 console.log(numbers(5, 2));
 
 // ANCHOR Create and modify array
-console.log(Array.from("123", (x) => x * 2));
+function modArray(x){
+  return x * 2
+}
+console.log(Array.from("123", modArray));
 
 // ANCHOR Check if array
 // Array.isArray is preferred over instanceof because it works through 98-ioiframes.
@@ -30,6 +33,12 @@ function arrToArgs(x, y, z) {
   return x + y + z;
 }
 console.log(arrToArgs(...[1, 2, 3]));
+
+// User of Spread
+let arr1 = [1,2,3];
+let arr2 = [...arr1];
+console.log(arr2 === arr1);
+
 
 // ANCHOR EVERY
 console.log([12, 54, 18, 130, 44].every((x) => x >= 10));
@@ -52,10 +61,11 @@ function isPrime(num) {
 console.log([4, 6, 8, 9, 12, 53, -17, 2, 5, 7, 31, 97, -1, 17].filter(isPrime));
 
 // ANCHOR Search Engine
+function hasString(str){
+  return str.toLowerCase().indexOf("a") !== -1
+}
 console.log(
-  ["rahul", "shalaka", "vihaan"].filter(
-    (ele) => ele.toLowerCase().indexOf("a") !== -1
-  )
+  ["rahul", "shalaka", "vihaan"].filter(hasString)
 );
 
 // ANCHOR FIND
@@ -75,8 +85,14 @@ console.log(
 );
 
 // ANCHOR REDUCE
-console.log([1, 2, [3, 4]].reduce((acc, ele) => acc.concat(ele), []));
+function myreducer(acc, ele)  {
+  console.log(Number.isInteger(ele));
+  console.log(typeof acc == 'string');
 
+  console.log(acc);
+  return acc = acc + ele}
+console.log([1, 2, 3, 4].reduce(myreducer));
+console.log([1, 2, ...[3, 4]]);
 // ANCHOR Make array flat (Recursive)
 function flatArr(arr, d = 1) {
   return d > 0
@@ -159,8 +175,8 @@ console.log(
   })
 );
 
-// ANCHOR SPLICE
-console.log([1, 2, 3, 4, 5].splice(1, 4));
+// ANCHOR SPLICE splice (index, number-of-elements)
+console.log([1, 2, 3, 8, 5, 6].splice(4, 1));
 
 // ANCHOR ERROR
 class CustomError extends Error {
@@ -237,7 +253,7 @@ console.log(
 function removeLeadingTrailing(n) {
   return parseFloat(n);
 }
-console.log(removeLeadingTrailing(3.04));
+console.log(removeLeadingTrailing(3.04000));
 
 // ANCHOR Basic Calculator
 function calculator(num1, operator, num2) {
@@ -350,6 +366,13 @@ function isPositiveDominant(a) {
     : false;
 }
 console.log(isPositiveDominant([5, 4, 3, 0, 0, -5, -9, -6, -2]));
+
+// ANCHOR 
+console.log(Array.from(new Set([600, 700, 700, 30, 700, 1000])))
+
+console.log([1,2,5,18,16].sort((a,b) => a - b ));
+
+console.log([1,2, 3, 4, 5, 6, 7, 20, "Infinity"].reduce((acc, ele, i, arr) => acc = acc + ele, 0));
 
 // ANCHOR Get max points note for each student
 function getStudentsWithNamesAndTopNotes(students) {
@@ -480,17 +503,25 @@ function findBrokenKeys(str1, str2) {
 }
 console.log(findBrokenKeys("starry night", "starrq light"));
 
-//ANCHOR Power Ranger
-function powerRanger(power, min, max) {
-  let powValue = 0;
-  let counter = min;
-  let listArr = [];
-  while (powValue < max) {
-    powValue = Math.pow(power, 1 / counter);
+//ANCHOR Find most repeated item in an array
 
-    listArr.push(counter);
-    counter++;
+const findRepectedNuber = array => {
+  const obj = {}
+  for(let ele of array){
+    if(obj[ele] === undefined){
+      obj[ele] = 1;
+    }else {
+      obj[ele]++
+    }
   }
-  return listArr;
+  let repeation = 0;
+  let arrEle;
+  for(let o in obj){
+    if(repeation < obj[o]){
+      repeation = obj[o];
+      arrEle = o;
+    }
+  }
+  return arrEle;
 }
-console.log(powerRanger(2, 49, 65));
+console.log(findRepectedNuber([2,3,4,3,1,6,7,7,7,7,4,4]))
